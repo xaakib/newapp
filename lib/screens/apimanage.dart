@@ -8,18 +8,31 @@ class ApiManage extends StatefulWidget {
 }
 
 class _ApiManageState extends State<ApiManage> {
-  ApiServices apiServices = ApiServices();
-  Article article;
-
+  ApiServices _apiServices = ApiServices();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("ApiManage"),
       ),
-      body: Container(
-        child: Text(article.description),
-      ),
+      body: FutureBuilder<News>(
+        future: _apiServices.getNews(),
+        builder: (context,snapshot){
+          if (snapshot.hasData) {
+            List<Article> list = snapshot.data.articles;
+
+            return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context,index){
+                return Text(list[index].title);
+              },
+            );
+          }else{
+            return CircularProgressIndicator();
+          }
+
+      }),
     );
+
   }
 }

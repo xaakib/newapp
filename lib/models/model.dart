@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-News newsFromJson(String str) => News.fromJson(json.decode(str));
 
-String newsToJson(News data) => json.encode(data.toJson());
 
 class News {
   News({
